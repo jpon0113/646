@@ -1,6 +1,10 @@
 import React, { FC, useState } from 'react'
-import QuestionCard from '../components/QuestionCard'
-import styles from './List.module.scss'
+import { Typography } from 'antd'
+import { useTitle } from 'ahooks'
+import QuestionCard from '../../components/QuestionCard'
+import styles from './common.module.scss'
+
+const { Title } = Typography
 
 const rawQuestionList = [
   {
@@ -12,8 +16,8 @@ const rawQuestionList = [
     createdAt: '3月10日 13:23',
   },
   {
-    _id: 'q1',
-    title: '問卷1',
+    _id: 'q2',
+    title: '問卷2',
     isPublished: false,
     isStar: false,
     answerCount: 5,
@@ -38,22 +42,24 @@ const rawQuestionList = [
 ]
 
 const List: FC = () => {
+  useTitle('J胖愛問卷')
   const [questionList, setQuestionList] = useState(rawQuestionList)
   return (
     <>
       <div className={styles.header}>
         <div className={styles.left}>
-          <h3>我的問卷</h3>
+          <Title level={3}>我的問卷</Title>
         </div>
         <div className={styles.right}>搜索</div>
       </div>
       <div className={styles.content}>
-        {questionList.map(q => {
-          const { _id } = q
-          return <QuestionCard key={_id} {...q} />
-        })}
+        {questionList.length > 0 &&
+          questionList.map(q => {
+            const { _id } = q
+            return <QuestionCard key={_id} {...q} />
+          })}
       </div>
-      <div className={styles.footer}>footer</div>
+      <div className={styles.footer}>上滑</div>
     </>
   )
 }
